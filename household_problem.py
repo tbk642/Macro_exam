@@ -22,7 +22,9 @@ def solve_hh_backwards(par,z_trans,
                 yt = w
                 u_ALL[i_fix,i_z,:] = 0.0
             else:
-                u_UI_ = np.fmax(np.fmin(par.u_bar_ss-(i_u-1),1.0),0.0)
+                for k in range(par.T): # solving backwards?
+                    t = par.T-k
+                    u_UI_ = np.fmax(np.fmin(par.u_bar_ss[t]-(i_u-1),1.0),0.0)
                 yt = (u_UI_*par.phi_obar + (1-u_UI_)*par.phi_ubar)*w
                 u_ALL[i_fix,i_z,:] = 1.0
 

@@ -109,7 +109,6 @@ class HANKSAMModelClass(EconModelClass,GEModelClass):
         par.tau_ss = 0.30 # tax rate in steady state
         par.phi_obar = 0.70 # high unemployment insurance
         par.phi_ubar = 0.40 # low unemployment insurance
-        par.u_bar_ss = 6.0 # max duration for high unemployment insurance
         
         par.delta_q = 1-1/36 # maturity of government bonds
         par.omega = 0.05 # responsiveness of tax to debt
@@ -125,6 +124,7 @@ class HANKSAMModelClass(EconModelClass,GEModelClass):
 
         # i. misc
         par.T = 12*40 # length of path        
+        par.u_bar_ss = np.array([6.0] * par.T) # max duration for high unemployment insurance
         
         par.max_iter_solve = 50_000 # maximum number of iterations when solving
         par.max_iter_simulate = 50_000 # maximum number of iterations when simulating
@@ -204,8 +204,6 @@ class HANKSAMModelClass(EconModelClass,GEModelClass):
         ss = self.ss
         path = self.path
 
-        #nom = np.sum([(path.Y[t]-ss.Y)/(1+ss.r) for t in range(par.T)])        
-        #denom = np.sum([(path.taxes[t]-ss.taxes)/(1+ss.r) for t in range(par.T)])
         nom = np.sum([(1+ss.r)**(-t)*(path.Y[t]-ss.Y) for t in range(par.T)])        
         denom = np.sum([(1+ss.r)**(-t)*(path.taxes[t]-ss.taxes) for t in range(par.T)])     
 
