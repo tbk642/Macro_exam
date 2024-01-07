@@ -119,6 +119,7 @@ def find_ss_SAM(model,do_print=False):
     
     # a. shocks
     ss.TFP = 1.0
+    ss.u_bar = par.u_bar_ss
 
     # b. fixed
     ss.delta = par.delta_ss
